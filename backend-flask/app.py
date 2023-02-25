@@ -11,7 +11,7 @@ def predict():
     # Get the input data from the request
     # input_data = request.json["data"]
     # Convert the input image to a PIL Image object
-    input_image_path = "raw_images/empty13.jpg"
+    input_image_path = "demo.jpg"
     with open(input_image_path, "rb") as input_image:
         pil_image = Image.open(io.BytesIO(input_image.read()))
 
@@ -25,8 +25,7 @@ def predict():
 
 # Run the Flask app
 if __name__ == "__main__":
-
-    model_path = "yolov5/runs/train/best.pt"
+    model_path = "best.pt"
     torch.hub._validate_not_a_forked_repo=lambda a,b,c: True
     model = torch.hub.load('ultralytics/yolov5', 'custom', path=model_path, force_reload=True)
     app.run(debug=True)
