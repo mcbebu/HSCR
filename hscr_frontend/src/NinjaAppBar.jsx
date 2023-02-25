@@ -9,9 +9,11 @@ function NinjaAppBar() {
       <AppBar position="static" sx={{ bgcolor: "#212125", color: "white" }}>
         <Container maxWidth="xl" sx={{ width: { xs: 1, sm: 0.9 } }}>
           <Toolbar disableGutters style={{ display: 'flex', justifyContent: 'center' }}>
-            <Box sx={{ flexGrow: 1, display: 'flex', justifyContent: 'center' }}>
-                <img src={NinjaParcel} alt="Ninja Parcel" style={{ height: 50 }} />
+            <Box sx={{ flexGrow: 1, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+              <img src={NinjaParcel} alt="Ninja Parcel" style={{ height: 50 }} />
+              <Box sx={{ display: 'flex', alignItems: 'center' }}>
                 <Typography>Ninja Hub Status</Typography>
+              </Box>
             </Box>
           </Toolbar>
         </Container>
