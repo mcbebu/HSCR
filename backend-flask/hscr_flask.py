@@ -5,6 +5,10 @@ from PIL import Image
 
 app = Flask(__name__)
 
+model_path = "best.pt"
+torch.hub._validate_not_a_forked_repo=lambda a,b,c: True
+model = torch.hub.load('ultralytics/yolov5', 'custom', path=model_path, force_reload=True)
+
 # Define a route handler to make predictions
 @app.route("/predict", methods=["GET"])
 def predict():
@@ -23,9 +27,10 @@ def predict():
     # Return the output data as a JSON response
     return jsonify({"result": results_string})
 
+@app.route("/health", methods=["GET"])
+def health():
+    return "OK"
+
 # Run the Flask app
 if __name__ == "__main__":
-    model_path = "best.pt"
-    torch.hub._validate_not_a_forked_repo=lambda a,b,c: True
-    model = torch.hub.load('ultralytics/yolov5', 'custom', path=model_path, force_reload=True)
-    app.run(debug=True)
+    app.run(host="0.0.0.0", debug=True)
