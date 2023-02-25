@@ -1,12 +1,15 @@
 import { useState } from 'react'
 import './App.css'
+import NinjaAppBar from './NinjaAppBar'
+import { Grid } from '@mui/material'
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
     <>
-      Test
+      <NinjaAppBar />
+      <Grid>
+
+      </Grid>
     </>
   )
 }
