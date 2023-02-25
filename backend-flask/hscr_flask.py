@@ -2,6 +2,7 @@ import io
 import torch
 from flask import Flask, jsonify
 from PIL import Image
+import base64
 
 app = Flask(__name__)
 
@@ -17,7 +18,9 @@ def predict():
     # Convert the input image to a PIL Image object
     input_image_path = "demo.jpg"
     with open(input_image_path, "rb") as input_image:
-        pil_image = Image.open(io.BytesIO(input_image.read()))
+        image_bytecode = input_image.read() 
+        pil_image = Image.open(io.BytesIO(image_bytecode))
+        image_bytes = str(base64.b64encode(image_bytecode))
 
     results = model(pil_image)
 
@@ -25,7 +28,9 @@ def predict():
     results_string = " ".join(results_string.split("\n")[0].split(" ")[-2:])
     
     # Return the output data as a JSON response
-    return jsonify({"result": results_string})
+
+    # strip the b from the image_bytes
+    return jsonify({"result": results_string, "image_bytes": image_bytes[2:-1]})
 
 @app.route("/health", methods=["GET"])
 def health():
