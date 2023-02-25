@@ -37,7 +37,6 @@ VOC/
 *.onnx
 *.engine
 *.mlmodel
-*.torchscript
 *.tflite
 *.h5
 *_saved_model/
