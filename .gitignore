@@ -2,7 +2,7 @@ venv/yolov5/bin
 .DS_Store
 detect
 train
-
+yolov5
 # Repo-specific GitIgnore ----------------------------------------------------------------------------------------------
 
 
