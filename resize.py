@@ -7,10 +7,9 @@ def resize(path):
     cv2.imwrite(path, res)
 
 
-path_train = "train_data/images/train"
-path_val = "train_data/images/val"
+path_train = "image labels ala carte"
 
-paths = [path_train, path_val]
+paths = [path_train]
 
 for path in paths:
     for filename in os.listdir(path):
