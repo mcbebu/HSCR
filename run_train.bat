@@ -1,0 +1,1 @@
+python yolov5/train.py --img 416 --batch 16 --epochs 150 --data yolov5/data/space.yaml --weights yolov5/yolov5s.pt --cache
