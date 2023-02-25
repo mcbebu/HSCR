@@ -14,4 +14,4 @@ for /d %%a in ("%directory%\*") do (
   )
 )
 
-python yolov5\detect.py --weights "%latestFolder%\weights\best.pt" --img 640 --conf 0.1 --source 0
+python yolov5\detect.py --weights "%latestFolder%\weights\best.pt" --img 640 --conf 0.5 --source 1
