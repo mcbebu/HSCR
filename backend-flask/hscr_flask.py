@@ -3,6 +3,15 @@ import torch
 from flask import Flask, jsonify
 from PIL import Image
 import base64
+from obs import ObsClient, Object, DeleteObjectsRequest
+from dotenv import load_dotenv
+import os
+
+AK = os.environ['AK']
+SK = os.environ['SK']
+server = os.environ['server']
+bucketName = os.environ['bucketName']
+obsClient = ObsClient(access_key_id=AK, secret_access_key=SK, server=server)
 
 app = Flask(__name__)
 
@@ -13,14 +22,15 @@ model = torch.hub.load('ultralytics/yolov5', 'custom', path=model_path, force_re
 # Define a route handler to make predictions
 @app.route("/predict", methods=["GET"])
 def predict():
-    # Get the input data from the request
-    # input_data = request.json["data"]
-    # Convert the input image to a PIL Image object
-    input_image_path = "demo.jpg"
-    with open(input_image_path, "rb") as input_image:
-        image_bytecode = input_image.read() 
-        pil_image = Image.open(io.BytesIO(image_bytecode))
-        image_bytes = str(base64.b64encode(image_bytecode))
+    resp = obsClient.listObjects(bucketName)
+    contents = resp['body']['contents']
+    contents.sort(key=lambda x: x['lastModified'])
+    image_name = contents[-1]['key']
+    resp = obsClient.getObject(bucketName, image_name, loadStreamInMemory=True)
+    image_buffer = resp['body']['buffer']
+    image_bytes = str(base64.b64encode(image_buffer))
+    pil_image = Image.open(io.BytesIO(image_buffer))
+    image_bytes = str(base64.b64encode(image_buffer))
 
     results = model(pil_image)
 
