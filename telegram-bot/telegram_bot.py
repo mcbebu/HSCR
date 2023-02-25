@@ -50,13 +50,17 @@ def get_request(url):
     try:
         response = requests.get(url)
         print(response)
-        send_message()
+        if response.status_code == 200:
+            data = response.json()
+            num = int(data['result'].split(" ")[0])
+            if num < 3:
+                send_message()
         return response
     except Exception as e:
         print(e)
         return None
 
-def send_message(message="There are too many vehicles in the sorting facility. Please wait for a while."):
+def send_message(message="There are too many pallets in the sorting facility. For your kind attention."):
     for subscriber in subscribers:
         bot.send_message(subscriber, message)
 
@@ -68,7 +72,7 @@ def schedule_checker():
 thread1 = Thread(target=schedule_checker)
 thread1.start()
 
-schedule.every().second.do(lambda: get_request("http://190.92.221.226:5000/health"))
+schedule.every(10).second.do(lambda: get_request("http://190.92.221.226/predict"))
 
 
 print("bot is running...")
