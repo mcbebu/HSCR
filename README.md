@@ -9,6 +9,13 @@ We are trying to solve a critical problem faced by Ninjavan's sorting center. Cu
 - then  identify the vacancy in the box
 
 # create virtual environment and install dependencies
+
+## windows
 python -m venv venv
 venv\scripts\activate
+pip install -r yolov5/requirements.txt
+
+## macs
+python -m venv venv
+source venv/bin/activate
 pip install -r yolov5/requirements.txt
