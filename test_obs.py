@@ -3,6 +3,7 @@ import base64
 import datetime
 from dotenv import load_dotenv
 import os
+load_dotenv()
 
 AK = os.environ['AK']
 SK = os.environ['SK']

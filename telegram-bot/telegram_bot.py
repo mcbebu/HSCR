@@ -49,11 +49,11 @@ def help_command(message):
 def get_request(url):
     try:
         response = requests.get(url)
-        print(response)
         if response.status_code == 200:
             data = response.json()
+            print(data['result'])
             num = int(data['result'].split(" ")[0])
-            if num < 3:
+            if num < 4:
                 send_message()
         return response
     except Exception as e:
@@ -72,7 +72,8 @@ def schedule_checker():
 thread1 = Thread(target=schedule_checker)
 thread1.start()
 
-schedule.every(10).second.do(lambda: get_request("http://190.92.221.226/predict"))
+# schedule.every(10).seconds.do(lambda: get_request("http://190.92.221.226/predict"))
+schedule.every(10).seconds.do(lambda: get_request("http://127.0.0.1:5000/predict"))
 
 
 print("bot is running...")
