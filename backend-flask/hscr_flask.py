@@ -8,6 +8,8 @@ from dotenv import load_dotenv
 import os
 from flask_cors import CORS
 
+load_dotenv()
+
 AK = os.environ['AK']
 SK = os.environ['SK']
 server = os.environ['server']
@@ -28,6 +30,7 @@ def predict():
     contents = resp['body']['contents']
     contents.sort(key=lambda x: x['lastModified'])
     image_name = contents[-1]['key']
+    print(image_name)
     resp = obsClient.getObject(bucketName, image_name, loadStreamInMemory=True)
     image_buffer = resp['body']['buffer']
     image_bytes = str(base64.b64encode(image_buffer))
@@ -37,6 +40,7 @@ def predict():
     results = model(pil_image)
 
     results_string = str(results)
+    print(results_string)
     results_string = " ".join(results_string.split("\n")[0].split(" ")[-2:])
     
     # Return the output data as a JSON response
