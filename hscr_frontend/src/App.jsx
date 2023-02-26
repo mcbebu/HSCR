@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import "./App.css";
 import NinjaAppBar from "./NinjaAppBar";
 import CallIcon from "@mui/icons-material/Call";
