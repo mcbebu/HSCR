@@ -7,6 +7,7 @@ import base64
 from obs import ObsClient, Object, DeleteObjectsRequest
 from dotenv import load_dotenv
 import os
+from flask_cors import CORS
 
 
 load_dotenv()
