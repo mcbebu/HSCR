@@ -1,11 +1,13 @@
 import io
 import torch
 from flask import Flask, jsonify
+from flask_cors import CORS
 from PIL import Image
 import base64
 from obs import ObsClient, Object, DeleteObjectsRequest
 from dotenv import load_dotenv
 import os
+
 
 load_dotenv()
 
@@ -16,6 +18,7 @@ bucketName = os.environ['bucketName']
 obsClient = ObsClient(access_key_id=AK, secret_access_key=SK, server=server)
 
 app = Flask(__name__)
+CORS(app)
 
 model_path = "best.pt"
 torch.hub._validate_not_a_forked_repo=lambda a,b,c: True

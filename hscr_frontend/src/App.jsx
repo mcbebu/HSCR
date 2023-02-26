@@ -6,15 +6,30 @@ import { Box, Grid, Typography, Card, Avatar, Button } from "@mui/material";
 
 function App() {
   const [base64Encoded, setBase64Encoded] = useState("");
+  const [num, setNum] = useState(0);
+  const [nowDate, setNowDate] = useState(new Date());
 
-  useEffect(() => {
-    fetch("http://190.92.221.226/predict")
+  const fetch_predict = () => {
+    fetch("http://127.0.0.1:5000/predict")
       .then((response) => {
         return response.json();
       })
       .then((data) => {
         setBase64Encoded(data.image_bytes);
+        // split the string to get the number
+        setNum(Number(data.result.split(" ")[0]));
+        setNowDate(new Date());
       });
+  }
+
+  useEffect(() => {
+    fetch_predict();
+    const intervalId = setInterval(() => {
+      fetch_predict();
+      console.log("Fetching new image");
+    }, 5000)
+
+    return () => clearInterval(intervalId);
   }, []);
 
   return (
@@ -46,7 +61,7 @@ function App() {
           <Typography
             variant="subtitle"
             sx={{ textAlign: "center", color: "grey", mb: 1 }}>
-            Last updated: 26/02/2023 03:17 AM
+            Last updated: {nowDate.toLocaleString()}
           </Typography>
           <Box sx={{ alignItems: "center", justifyContent: "center" }}>
             <img src={`data:image/png;base64,${base64Encoded}`}></img>
@@ -75,14 +90,14 @@ function App() {
             <Grid item xs={6}>
               <Card variant="outlined" sx={{ p: 1.5 }}>
                 <Typography variant="h6">
-                  Hub Capacity: <span style={{ color: "green" }}>10%</span>
+                  Hub Capacity: <span style={{ color: "green" }}>{((9-num)/9).toFixed(2)*100}%</span>
                 </Typography>
               </Card>
             </Grid>
             <Grid item xs={6}>
               <Card variant="outlined" sx={{ p: 1.5 }}>
                 <Typography variant="h6">
-                  Available Grids: <span style={{ color: "green" }}>9/10</span>
+                  Available Grids: <span style={{ color: "green" }}>{num}/9</span>
                 </Typography>
               </Card>
             </Grid>
