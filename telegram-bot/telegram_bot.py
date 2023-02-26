@@ -72,8 +72,8 @@ def schedule_checker():
 thread1 = Thread(target=schedule_checker)
 thread1.start()
 
-# schedule.every(10).seconds.do(lambda: get_request("http://190.92.221.226/predict"))
-schedule.every(10).seconds.do(lambda: get_request("http://127.0.0.1:5000/predict"))
+schedule.every(10).seconds.do(lambda: get_request("http://190.92.221.226/predict"))
+# schedule.every(10).seconds.do(lambda: get_request("http://127.0.0.1:5000/predict"))
 
 
 print("bot is running...")

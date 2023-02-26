@@ -10,7 +10,8 @@ function App() {
   const [nowDate, setNowDate] = useState(new Date());
 
   const fetch_predict = () => {
-    fetch("http://127.0.0.1:5000/predict")
+    // fetch("http://127.0.0.1:5000/predict")
+    fetch("http://190.92.221.226/predict")
       .then((response) => {
         return response.json();
       })
